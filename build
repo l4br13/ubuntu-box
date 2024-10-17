@@ -1,0 +1,34 @@
+#!/bin/sh
+
+if [ $(id -u) = 0 ]; then
+    printf "$(basename $0): must not be superuser to run command.\n"
+	exit 1
+fi
+
+DIR=$(realpath $(dirname $0))
+FILE_OUT=$DIR/ubuntu.sh
+
+printf "#!/bin/sh\n" > $FILE_OUT
+printf "# build date - $(date)" >> $FILE_OUT
+
+printf "\n\n" >> $FILE_OUT
+cat $DIR/src/env.sh >> $FILE_OUT
+
+printf "\n\n" >> $FILE_OUT
+cat $DIR/src/getopt.sh >> $FILE_OUT
+
+printf "\n\n" >> $FILE_OUT
+cat $DIR/src/trap.sh >> $FILE_OUT
+
+for i in $DIR/src/function/*
+do
+	printf "\n\n" >> $FILE_OUT
+	cat $i >> $FILE_OUT
+done
+
+printf "\n\n" >> $FILE_OUT
+cat $DIR/src/main.sh >> $FILE_OUT
+
+chmod +x $FILE_OUT
+
+printf "$(basename $0): done.\n"

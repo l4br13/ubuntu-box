@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ $(id -u) != 0 ]; then
+	printf "$(basename $0): must be superuser to run command.\n"
+	exit 1
+fi
+
+if [ ! -f $(realpath $(dirname $0))/ubuntu.sh ]; then
+	printf "$(basename $0): ubuntu.sh is not exists.\n"
+	printf "$(basename $0): run build command before install.\n"
+	exit 1
+fi
+
+cp $(realpath $(dirname $0))/ubuntu.sh /usr/bin/ubuntu
