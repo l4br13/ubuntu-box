@@ -20,6 +20,8 @@ INSTALL () {
     
     if [ "$ARCH" = "x86_64" ]; then
         REL_ARCH=amd64
+    elif [ "$ARCH" = "aarch64" ]; then
+        REL_ARCH=arm64
     fi
     
     ROOTFS=$REL-base-$REL_ARCH.tar.gz
